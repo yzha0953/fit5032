@@ -11,12 +11,12 @@ import JSON from './components/JSON.vue'
     <div class="wrapper">
       <HelloWorld msg="You did it!" />
     </div>
-  </header>
+  </header> -->
 
   <main>
-    <TheWelcome />
-  </main> -->
-  <JSON> </JSON>
+    <JSON> </JSON>
+    <!-- <TheWelcome /> -->
+  </main>
 </template>
 
 <style scoped>
