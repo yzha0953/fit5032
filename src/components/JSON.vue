@@ -92,7 +92,7 @@
       <!-- Activity 12: Get the top sellers from the bookstores object. -->
       <!-- TODO: CODE TO GET TOP SELLERS HERE -->
       <p>We operate in: {{ bookstores.countries.join(", ") }}</p>
-      <p>Our #1 seller: {{ bookstores.topSellers[0] }}</p>
+      <p>Our #1 seller: <<{{ bookstores.topSellers[0] }}>></p>
     </section>
 
     <section class="lab-section">
@@ -113,7 +113,7 @@
       <li 
         v-for="author in authors"
         :key="author.id"
-        :class="{ hightlight: author.name === 'George Orwell'}"
+        :class="{ highlight: author.name === 'George Orwell'}"
       >
         {{  author.name }}
       </li>
@@ -129,6 +129,7 @@ import { ref, computed } from "vue"
 // TODO: CODE TO IMPORT JSON FILES HERE
 import authors from "../assets/json/authors.json"
 import bookstores from "../assets/json/bookstores.json"
+
 const showMessage = ref(false)
 
 // Activity 2: Get authors born after 1850
