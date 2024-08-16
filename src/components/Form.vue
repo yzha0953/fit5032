@@ -124,7 +124,7 @@ const validateName = (blur) => {
 
 const validatePassword = (blur) => {
     const password = formData.value.password;
-    const minlength = 6;
+    const minlength = 4;
     const hasUppercase = /[A-Z]/.test(password);
     const hasLowercase = /[a-z]/.test(password);
     const hasNumber = /\d/.test(password);
@@ -152,7 +152,7 @@ const validateGender = (blur) => {
 }
 
 const validateReason = (blur) => {
-    if (formData.value.reason.length < 30) {
+    if (!formData.value.reason) {
         if (blur) errors.value.reason = "Reason must be at least 30 characters";
     }
     else { errors.value.reason = null; }
