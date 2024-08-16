@@ -45,30 +45,25 @@
                     <div class="mb-3">
                         <label for="reason" class="form-label">Reason for joining</label>
                         <textarea class="form-control" id="reason" rows="3" 
+                        @blur ="() => validateReason(true)"
+                        @input="() => validateReason(false)"
                         v-model="formData.reason"></textarea>
+                        <div v-if="errors.reason" class="text-danger">{{ errors.reason}}</div>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary me-2">Submit</button>
                         <button type="button" class="btn btn-secondary" @click="clearForm">Clear</button>
                     </div>
                 </form>
-
-                <div class="row mt-5" v-if="submittedCards.length">
-                    <div class="d-flex flex-wrap justify-content-start">
-                        <div v-for="(card, index) in submittedCards" :key="index" class="card m-2" style="width: 18rem;">
-                            <div class="card-header">
-                                User Information
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Username: {{ card.username }}</li>
-                                <li class="list-group-item">Password: {{ card.password }}</li>
-                                <li class="list-group-item">Australian Resident: {{ card.isAustralian ? 'Yes' : 'No' }}</li>
-                                <li class="list-group-item">Gender: {{ card.gender }}</li>
-                                <li class="list-group-item">Reason: {{ card.reason }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+            </div>
+            <div class="row mt-5" v-if="submittedCards.length">
+                <DataTable :value="submittedCards" tableStyle=" min-width: 50rem">
+                    <Column field="username" header="Username"></Column>
+                    <Column field="password" header="Password"></Column>
+                    <Column field="isAustralian" header="IsAustralian"></Column>
+                    <Column field="gender" header="Gender"></Column>
+                    <Column field="reason" header="Reason"></Column>
+                </DataTable>
             </div>
         </div>
     </div>
@@ -92,7 +87,8 @@ const submitForm = () => {
     validateName(true)
     validatePassword(true)
     validateGender(true)
-    if(!errors.value.username && !errors.value.password && !errors.value.gender){
+    validateReason(true)
+    if(!errors.value.username && !errors.value.password && !errors.value.gender && !errors.value.reason){
         submittedCards.value.push({
         ...formData.value
     }); 
@@ -128,7 +124,7 @@ const validateName = (blur) => {
 
 const validatePassword = (blur) => {
     const password = formData.value.password;
-    const minlength = 8;
+    const minlength = 6;
     const hasUppercase = /[A-Z]/.test(password);
     const hasLowercase = /[a-z]/.test(password);
     const hasNumber = /\d/.test(password);
@@ -147,12 +143,19 @@ const validatePassword = (blur) => {
     } else{
         errors.value.password = null;}
 }
+
 const validateGender = (blur) => {
     if (!formData.value.gender) {
         if (blur) errors.value.gender = "Gender must be selected";
     }
     else { errors.value.gender = null; }
+}
 
+const validateReason = (blur) => {
+    if (formData.value.reason.length < 30) {
+        if (blur) errors.value.reason = "Reason must be at least 30 characters";
+    }
+    else { errors.value.reason = null; }
 }
 </script>
 
