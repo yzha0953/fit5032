@@ -52,7 +52,7 @@ export default {
         },
         iconUrl() {
             return this.weatherData
-                ? `http://api.openweathermap.org/img/w/${this.weatherData.weather[0].icon}.png`
+                ? `https://api.openweathermap.org/img/w/${this.weatherData.weather[0].icon}.png`
                 : null;
         },
     },
@@ -62,12 +62,12 @@ export default {
     methods: {
         async searchByCity() {
             try {
-                const geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${this.city}&appid=${apikey}`;
+                const geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${this.city}&appid=${apikey}`;
                 const { data: locationData } = await axios.get(geoUrl);
                 console.log("Response location: ", locationData);
                 const lat = locationData[0].lat
                 const lon = locationData[0].lon
-                const searchWeatherUrl = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apikey}`;
+                const searchWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apikey}`;
                 await this.fetchWeatherData(searchWeatherUrl);
             } catch (error) {
                 console.error("Error fetching weather data:", error);
@@ -77,7 +77,7 @@ export default {
             if (navigator.geolocation){
                 navigator.geolocation.getCurrentPosition(async (position) => {
                     const { latitude, longitude} = position.coords;
-                    const url = `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apikey}`;
+                    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apikey}`;
                     await this.fetchWeatherData(url);
                 });
             }
